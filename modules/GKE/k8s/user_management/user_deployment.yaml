@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user_management_ms
+  labels:
+    app: user_management_ms
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: user_management_ms
+  template:
+    metadata:
+      labels:
+        app: user_management_ms
+    spec:
+      containers:
+      - name: user-management-container
+        image: gcr.io/masteris1/user_management_ms:latest
+        ports:
+        - containerPort: 8080

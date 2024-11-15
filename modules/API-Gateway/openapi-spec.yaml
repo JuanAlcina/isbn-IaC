@@ -1,0 +1,15 @@
+openapi: "3.0.0"
+info:
+  title: "ISBN API Gateway"
+  version: "1.0.0"
+paths:
+  /mi-endpoint:
+    post:
+      summary: "Api Gateway ISBN"
+      operationId: ""
+      responses:
+        '200':
+          description: "Solicitud exitosa"
+      x-google-backend:
+        address: "https://backend-url"
+        protocol: "https"

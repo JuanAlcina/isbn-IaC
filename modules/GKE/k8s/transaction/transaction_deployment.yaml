@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactions_ms
+  labels:
+    app: transactions_ms
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: transactions_ms
+  template:
+    metadata:
+      labels:
+        app: transactions_ms
+    spec:
+      containers:
+      - name: transactions-container
+        image: gcr.io/masteris1/transactions_ms:latest
+        ports:
+        - containerPort: 8080
