@@ -8,6 +8,12 @@ module "APIs" {
   project_id =  var.project_id
 }
 
+module "APIGateway" {
+    source = "./modules/API-Gateway" 
+    region = var.region
+    depends_on    = [module.APIs]  # Asegura que el módulo de APIs se ejecute primero
+}
+
 module "GKE" {
     source = "./modules/GKE" 
     region = var.region
