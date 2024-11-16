@@ -8,20 +8,21 @@ resource "google_compute_subnetwork" "isbn_gke_subnetwork" {
   name          = "isbn-gke-subnetwork"
   ip_cidr_range = "10.0.0.0/16"
   region        = var.region
-  network       = google_compute_network.gke_network.name
+  network       = google_compute_network.isbn_gke_network.name
 }
 
 # Configuración del clúster de GKE
 resource "google_container_cluster" "isbn_primary" {
   name     = "isbn-gke-cluster"
   location = var.region
+  deletion_protection = false
 
   # Red y subred
-  network    = google_compute_network.gke_network.name
-  subnetwork = google_compute_subnetwork.gke_subnetwork.name
+  network    = google_compute_network.isbn_gke_network.name
+  subnetwork = google_compute_subnetwork.isbn_gke_subnetwork.name
 
   # Configuración de los nodos
-  initial_node_count = 3
+  initial_node_count = 1
 
   node_config {
     machine_type = "e2-medium"
@@ -39,6 +40,6 @@ resource "google_container_cluster" "isbn_primary" {
 
 # Obtener credenciales para el clúster
 output "kubeconfig" {
-  value = google_container_cluster.primary.endpoint
+  value = google_container_cluster.isbn_primary.endpoint
   description = "URL del endpoint del clúster de GKE"
 }
